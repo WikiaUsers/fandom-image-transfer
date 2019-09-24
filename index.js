@@ -22,9 +22,9 @@ import {
     TextInput,
     Window,
     render
-    /* eslint-enable no-unused-vars */
 } from 'proton-native';
-import {Component} from 'react';
+import React, {Component} from 'react';
+/* eslint-enable no-unused-vars */
 import UploaderApi from './api.js';
 import Wiki from './wiki.js';
 import pkg from './package.json';
@@ -396,7 +396,7 @@ class Base extends Component {
                 break;
             }
             this.log(`Uploading ${image.title}...`);
-            await this.uploadImage();
+            await this.uploadImage(image, uploader);
             this.setState({
                 progress: Math.round(++progress / all * 100)
             });

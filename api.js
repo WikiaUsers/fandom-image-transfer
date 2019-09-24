@@ -91,7 +91,7 @@ export default class UploaderApi {
                     prop: 'imageinfo'
                 }
             }), {pages} = response.data.query,
-                cont = response['query-continue'];
+                cont = response.data['query-continue'];
             for (const page in pages) {
                 const p = pages[page];
                 if (p.imageinfo) {
@@ -121,13 +121,14 @@ export default class UploaderApi {
             const batch = images.splice(0, 50),
                   response = await http.get(this._from.apiUrl, {
                 params: {
-                    // Weird redirection bug.
-                    '*': '0',
                     'action': 'query',
                     'format': 'json',
                     'iiprop': 'url',
                     'prop': 'imageinfo',
-                    'titles': batch.join('|')
+                    'titles': batch.join('|'),
+                    // Weird redirection bug.
+                    /* eslint-disable-next-line sort-keys */
+                    '*': '0'
                 }
             }), {pages} = response.data.query;
             for (const page in pages) {
