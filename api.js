@@ -62,11 +62,18 @@ export default class UploaderApi {
                 action: 'query',
                 format: 'json',
                 intoken: 'edit',
+                meta: 'tokens',
                 prop: 'info',
-                titles: '#'
+                titles: '#',
+                type: 'csrf'
             },
             transformResponse: [
-                d => JSON.parse(d).query.pages[-1].edittoken
+                function(d) {
+                    const data = JSON.parse(d);
+                    return data.query.pages ?
+                        data.query.pages[-1].edittoken :
+                        data.query.tokens.csrftoken;
+                }
             ]
         });
     }
@@ -90,7 +97,8 @@ export default class UploaderApi {
                     iiprop: 'url',
                     prop: 'imageinfo'
                 }
-            }), {pages} = response.data.query,
+            });
+            const {pages} = response.data.query,
                 cont = response.data['query-continue'];
             for (const page in pages) {
                 const p = pages[page];

@@ -32,12 +32,12 @@ export default class Wiki {
               language = result.shift(),
               splitSubdomain = subdomain.split('.');
         this.domain = domain === 'wikia.com' ? 'fandom.com' : domain;
-        if (validateLanguageCode(language)) {
+        if (validateLanguageCode(`${language}-US`)) {
             this.language = language;
             this.subdomain = subdomain;
         } else if (
             splitSubdomain.length > 1 &&
-            validateLanguageCode(splitSubdomain[0])
+            validateLanguageCode(`${splitSubdomain[0]}-US`)
         ) {
             this.language = splitSubdomain[0];
             this.subdomain = splitSubdomain.slice(1).join('.');
